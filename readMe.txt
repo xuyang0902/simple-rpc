@@ -1,7 +1,7 @@
 # 简化版rpc工程。
 # 1、用zookeeper作为服务发现中心
 # 2、用netty作为通信工具
-# 3、protolbuffer 序列化
+# 3、protostuff 序列化
 
 
 
