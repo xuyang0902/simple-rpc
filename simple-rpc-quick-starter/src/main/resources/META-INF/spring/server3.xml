@@ -1,0 +1,32 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+>
+
+    <context:component-scan base-package="com.simple.quick.starter.normal"/>
+
+    <!--配置注册中心-->
+    <bean id="registerConfig" class="com.simple.register.RegisterConfig">
+        <property name="address" value="192.168.1.110"/>
+        <property name="protocol" value="zookeeper"/>
+    </bean>
+
+    <!--rpc服务端通信端口-->
+    <bean id="nodeConfig" class="com.simple.commons.model.NodeConfig">
+        <property name="application" value="test-rpc-server"/>
+        <property name="port" value="7780"/>
+    </bean>
+
+    <!--启动服务-->
+    <bean class="com.simple.core.BootServer">
+        <property name="nodeConfig" ref="nodeConfig"/>
+        <property name="registerConfig" ref="registerConfig"/>
+    </bean>
+
+
+    <!--
+    spring会把一下的服务发布到zk
+    @RpcService(value = App.class ,version = "1.0")
+    -->
+</beans>
