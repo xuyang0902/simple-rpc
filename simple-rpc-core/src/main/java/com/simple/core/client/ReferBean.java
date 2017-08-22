@@ -121,7 +121,7 @@ public class ReferBean<T> implements FactoryBean, ApplicationContextAware, Initi
 
     @Override
     public boolean isSingleton() {
-        return false;
+        return true;
     }
 
 
