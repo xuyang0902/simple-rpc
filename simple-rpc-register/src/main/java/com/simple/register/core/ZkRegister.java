@@ -178,9 +178,8 @@ public class ZkRegister implements Register {
         try {
             String serverUrl = "/" + rpcURL.getServiceBean();
             curatorFramework.delete().forPath(serverUrl + "/providers/" + NodeURL.get(rpcURL));
-
         } catch (Exception e) {
-            logger.error("ZookeeperRegister.doRegister error ", e);
+            logger.warn("ZookeeperRegister.doRegister error",e);
         }
     }
 
@@ -302,7 +301,7 @@ public class ZkRegister implements Register {
             curatorFramework.delete().forPath(serverUrl + "/consumers/" + rpcURL.toString());
 
         } catch (Exception e) {
-            logger.error("ZookeeperRegister.doUnSubscribe error ", e);
+            logger.warn("ZookeeperRegister.doUnSubscribe error ", e);
         }
 
 

@@ -19,7 +19,7 @@
     </bean>
 
     <!--启动服务-->
-    <bean class="com.simple.core.BootServer">
+    <bean class="com.simple.core.BootManager">
         <property name="nodeConfig" ref="nodeConfig"/>
         <property name="registerConfig" ref="registerConfig"/>
     </bean>

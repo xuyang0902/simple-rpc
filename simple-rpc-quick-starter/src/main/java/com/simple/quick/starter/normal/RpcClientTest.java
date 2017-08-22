@@ -3,6 +3,7 @@ package com.simple.quick.starter.normal;
 import com.simple.core.BootClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -27,9 +28,11 @@ public class RpcClientTest {
         List<Future<String>> list = new ArrayList<Future<String>>();
         long begin = System.currentTimeMillis();
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
 
             final int finalI = i;
+
+            Thread.sleep(1000L);
             Future<String> hello = executorService.submit(new Callable<String>() {
                 @Override
                 public String call() throws Exception {

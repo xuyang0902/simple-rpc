@@ -19,7 +19,7 @@ interface Register {
     void doRegister(RpcURL rpcURL);
 
     /**
-     * 服务端 停机，重启 取消注册
+     * 服务端 停机，重启 取消注册   todo
      * <p>
      * @param rpcURL
      */
@@ -32,7 +32,7 @@ interface Register {
     void doSubscribe(RpcURL rpcURL);
 
     /**
-     * 客户端取消订阅了
+     * 客户端取消订阅了  todo
      * <p>
      * @param rpcURL
      */

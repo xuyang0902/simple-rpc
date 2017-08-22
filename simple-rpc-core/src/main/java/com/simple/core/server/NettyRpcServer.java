@@ -3,7 +3,7 @@ package com.simple.core.server;
 import com.simple.commons.model.NodeConfig;
 import com.simple.commons.model.RpcResponse;
 import com.simple.commons.model.RpcURL;
-import com.simple.core.BootServer;
+import com.simple.core.BootManager;
 import com.simple.core.RemotingService;
 import com.simple.core.protocol.RpcDecoder;
 import com.simple.core.protocol.RpcEncoder;
@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * 远程Server实现
@@ -35,6 +36,8 @@ public class NettyRpcServer implements RemotingService {
 
     private NodeConfig nodeConfig;
 
+    private AtomicBoolean start = new AtomicBoolean(false);
+
     public NettyRpcServer(NodeConfig nodeConfig) {
         this.serverBootstrap = new ServerBootstrap();
         this.bossGroup = new NioEventLoopGroup(1);
@@ -46,6 +49,12 @@ public class NettyRpcServer implements RemotingService {
     public void start() {
 
         logger.info("rpc netty sever starting");
+
+        if (start.get()) {
+            logger.info(" netty sever is started ");
+        }
+
+        start.compareAndSet(false, true);
 
         ServerBootstrap handler = this.serverBootstrap.group(bossGroup, workerGroup)
                 .channel(NioServerSocketChannel.class)
@@ -70,7 +79,7 @@ public class NettyRpcServer implements RemotingService {
 
         try {
 
-            handler.bind(new InetSocketAddress(nodeConfig.getIp(),nodeConfig.getPort()));
+            handler.bind(new InetSocketAddress(nodeConfig.getIp(),nodeConfig.getPort())).sync();
 
             logger.info("server started finished!");
 
@@ -103,7 +112,7 @@ public class NettyRpcServer implements RemotingService {
             RpcResponse response = new RpcResponse();
             response.setOpaque(url.getOpaque());
             try {
-                Object serviceBean = BootServer.getHandlerMap().get(url.getServiceBean());
+                Object serviceBean = BootManager.getHandlerMap().get(url.getServiceBean());
 
 
                 Class<?> serviceClass = serviceBean.getClass();

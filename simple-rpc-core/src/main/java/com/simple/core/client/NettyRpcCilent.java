@@ -25,6 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -60,6 +61,8 @@ public class NettyRpcCilent implements RemotingService, RpcClient {
     //节点选择器
     private static final ChooseStrategy chooseStrategy = new DefaultChooseStrategy();
 
+    private AtomicBoolean start = new AtomicBoolean(false);
+
     public NettyRpcCilent() {
         this.bootstrap = new Bootstrap();
         this.worker = new NioEventLoopGroup(4);
@@ -67,7 +70,13 @@ public class NettyRpcCilent implements RemotingService, RpcClient {
     }
 
     public void start() {
-        logger.info(" netty sever starting");
+        logger.info(" netty client starting");
+
+        if (start.get()) {
+            logger.info(" netty client is started ");
+        }
+
+        start.compareAndSet(false, true);
 
         Bootstrap handler = this.bootstrap.group(worker)
                 .channel(NioSocketChannel.class)
@@ -87,7 +96,7 @@ public class NettyRpcCilent implements RemotingService, RpcClient {
                     }
                 });
 
-        logger.info(" netty sever finished");
+        logger.info(" netty client finished");
     }
 
     public void shutdown() {

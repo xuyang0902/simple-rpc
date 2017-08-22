@@ -17,10 +17,11 @@
     <bean id="nodeConfig" class="com.simple.commons.model.NodeConfig">
         <property name="application" value="test-rpc-server"/>
         <property name="port" value="7777"/>
+        <property name="ip" value="127.0.0.1"/>
     </bean>
 
     <!--启动服务-->
-    <bean class="com.simple.core.BootServer">
+    <bean class="com.simple.core.BootManager">
         <property name="nodeConfig" ref="nodeConfig"/>
         <property name="registerConfig" ref="registerConfig"/>
     </bean>

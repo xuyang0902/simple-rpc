@@ -3,6 +3,8 @@ package com.simple.commons.model;
 
 import com.alibaba.fastjson.JSON;
 import com.simple.commons.constant.RpcConstants;
+import com.simple.commons.util.RemotingHelper;
+import org.springframework.util.StringUtils;
 
 /**
  * 应用节点配置
@@ -28,7 +30,10 @@ public class NodeConfig {
     }
 
     public String getIp() {
-        return ip;
+        if (StringUtils.isEmpty(this.ip)) {
+            this.ip = RemotingHelper.getHostAddr();
+        }
+        return this.ip;
     }
 
     public void setIp(String ip) {

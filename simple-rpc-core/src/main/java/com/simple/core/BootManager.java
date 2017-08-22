@@ -22,10 +22,11 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * 启动管理类
  * @author xu.qiang
  * @date 17/8/11
  */
-public class BootServer implements ApplicationContextAware, InitializingBean, DisposableBean {
+public class BootManager implements ApplicationContextAware, InitializingBean, DisposableBean {
 
     /**
      * rpc提供者map
@@ -62,10 +63,17 @@ public class BootServer implements ApplicationContextAware, InitializingBean, Di
     @Override
     public void afterPropertiesSet() throws Exception {
 
+        if(registerConfig == null){
+            registerConfig = ctx.getBean(RegisterConfig.class.getName(),RegisterConfig.class);
+        }
+
+        if(nodeConfig == null){
+            nodeConfig = ctx.getBean(NodeConfig.class.getName(),NodeConfig.class);
+        }
+
         if (registerConfig == null || StringUtils.isEmpty(registerConfig.getAddress())) {
             throw new RpcException("registerConfig can not be null");
         }
-
 
         if (nodeConfig == null) {
             throw new RpcException("registerConfig can not be null");
@@ -130,7 +138,9 @@ public class BootServer implements ApplicationContextAware, InitializingBean, Di
     @Override
     public void destroy() throws Exception {
         for (Map.Entry<String, RpcURL> entry : localRegisterURLMap.entrySet()) {
-            zkRegister.doUnregister(entry.getValue());
+            handlerMap.remove(entry.getValue().getServiceBean());
+            localRegisterURLMap.remove(entry.getValue().getServiceBean());
+//            zkRegister.doUnregister(entry.getValue());
         }
     }
 
@@ -170,5 +180,11 @@ public class BootServer implements ApplicationContextAware, InitializingBean, Di
         return handlerMap;
     }
 
+    public ZkRegister getZkRegister() {
+        return zkRegister;
+    }
 
+    public static ConcurrentHashMap<String, RpcURL> getLocalRegisterURLMap() {
+        return localRegisterURLMap;
+    }
 }

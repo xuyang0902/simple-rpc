@@ -12,4 +12,14 @@
     <artifactId>simple-rpc-spring</artifactId>
 
 
+    <dependencies>
+
+
+        <dependency>
+            <groupId>com.simple</groupId>
+            <artifactId>simple-rpc-core</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
+
 </project>
