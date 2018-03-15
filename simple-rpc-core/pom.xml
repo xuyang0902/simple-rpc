@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>com.simple</groupId>
-            <artifactId>simple-commons</artifactId>
+            <artifactId>simple-rpc-commons</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>
