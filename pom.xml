@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.simple</groupId>
-    <artifactId>simple-rpc</artifactId>
+    <groupId>com.xrpc</groupId>
+    <artifactId>xrpc</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
     <build>
@@ -21,11 +21,11 @@
         </plugins>
     </build>
     <modules>
-        <module>simple-rpc-commons</module>
-        <module>simple-rpc-core</module>
-        <module>simple-rpc-register</module>
-        <module>simple-rpc-spring</module>
-        <module>simple-rpc-quick-starter</module>
+        <module>xrpc-commons</module>
+        <module>xrpc-core</module>
+        <module>xrpc-register</module>
+        <module>xrpc-spring</module>
+        <module>xrpc-samples</module>
     </modules>
 
 </project>
